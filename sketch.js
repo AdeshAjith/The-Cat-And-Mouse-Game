@@ -11,6 +11,8 @@ function preload() {
     tomImage = loadImage("tomOne.png");
     tomRunning = loadAnimation("tomTwo.png","tomThree.png");
     jerryTeasing = loadAnimation("jerryTwo.png","jerryThree.png");
+    tomLastImage = loadImage("tomFour.png");
+    jerryLastImage = loadImage("jerryFour.png")
 
 }
 
@@ -25,11 +27,14 @@ function setup(){
     jerry = createSprite(200,580);
     jerry.addImage(jerryImage);
     jerry.addAnimation("Teasing",jerryTeasing);
+    jerry.addAnimation("Stopping",jerryLastImage)
+
     jerry.scale = 0.1;
 
     tom = createSprite(700,580);
     tom.addImage(tomImage);
     tom.addAnimation("Running",tomRunning);
+    tom.addAnimation("Stopping",tomLastImage)
     tom.scale = 0.12;
 
 }
@@ -39,6 +44,14 @@ function draw() {
     background("white");
    
     keyPressed();
+
+    if(tom.x - jerry.x < (tom.width - jerry.width)/2){
+      tom.x = 258
+      tom.scale = 0.15
+      tom.velocityX = 0
+      tom.changeAnimation("Stopping",tomLastImage)
+      jerry.changeAnimation("Stopping",jerryLastImage)
+    }
 
     drawSprites();
 }
